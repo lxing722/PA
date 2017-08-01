@@ -23,3 +23,4 @@ for file in $@; do
 		fi
 	fi
 done
+#just a test
