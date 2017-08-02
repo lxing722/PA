@@ -73,8 +73,9 @@ static struct {
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
 	///////my code
-	{ "si", "Execute program step by step", cmd_si},
-	{ "info", "", cmd_info},
+	{ "si", "Execute the program step by step", cmd_si},
+	{ "info", "Print revelent information", cmd_info},
+
 	////////////
 	/* TODO: Add more commands */
 
