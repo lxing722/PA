@@ -56,7 +56,7 @@ static int cmd_si(char * args){
 static int cmd_info(char *args){
 	char *arg = strtok(NULL, "");
 	if(strcmp(arg, "r") == 0){
-		printf("eax\t%d\t%x",cpu.eax, cpu.eax);
+		printf("eax\t%x\t%u\n",cpu.eax, cpu.eax);
 	}
 	if(strcmp(arg, "w") == 0){
 
