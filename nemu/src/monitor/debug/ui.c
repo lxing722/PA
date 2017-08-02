@@ -44,7 +44,9 @@ static int cmd_si(char * args){
 	if(arg != NULL){
 		steps = atoi(arg);
 	}
-	cpu_exec(steps);
+	else{
+		cpu_exec(steps);
+	}
 	return 0;
 }
 static struct {
