@@ -24,7 +24,13 @@ typedef struct {
 	/* Do NOT change the order of the GPRs' definitions. */
 
 	#define eax gpr[0]._32
-	uint32_t ecx, edx, ebx, esp, ebp, esi, edi;
+	#define ecx gpr[1]._32
+	#define edx gpr[2]._32
+	#define ebx gpr[3]._32
+	#define esp gpr[4]._32
+	#define ebp gpr[5]._32
+	#define esi gpr[6]._32
+	#define edi gpr[7]._32
 
 
 	swaddr_t eip;
