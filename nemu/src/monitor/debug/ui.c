@@ -43,15 +43,12 @@ static int cmd_si(char * args){
 	int steps = 1;
 	if(arg != NULL){
 		steps = atoi(arg);
-	}
-	else{
 		if(steps < 0){
 			printf("N must larger than 0\n");
-		}
-		else{
-			cpu_exec(steps);
+			return -1;
 		}
 	}
+	cpu_exec(steps);
 	return 0;
 }
 static struct {
