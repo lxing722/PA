@@ -43,9 +43,10 @@ static int cmd_si(char * args){
 	int steps = 1;
 	if(arg != NULL){
 		steps = atoi(arg);
+		printf("%d\n", steps);
 		if(steps < 0){
 			printf("N must larger than 0\n");
-			return -1;
+			return 0;
 		}
 	}
 	cpu_exec(steps);
