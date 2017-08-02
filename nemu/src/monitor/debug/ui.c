@@ -38,6 +38,7 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+//////////my code
 static int cmd_si(char * args){
 	char *arg = strtok(NULL, " ");
 	int steps = 1;
@@ -52,6 +53,17 @@ static int cmd_si(char * args){
 	cpu_exec(steps);
 	return 0;
 }
+static int cmd_info(char *args){
+	char *arg = strtok(NULL, "");
+	if(strcmp(arg, "r") == 0){
+		printf("eax\t%d\t%x",cpu.eax, cpu.eax);
+	}
+	if(strcmp(arg, "w") == 0){
+
+	}
+	return 0;
+}
+/////////////
 static struct {
 	char *name;
 	char *description;
@@ -60,7 +72,10 @@ static struct {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
+	///////my code
 	{ "si", "Execute program step by step", cmd_si},
+	{ "info", "", cmd_info},
+	////////////
 	/* TODO: Add more commands */
 
 };
