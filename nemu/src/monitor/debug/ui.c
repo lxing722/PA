@@ -45,7 +45,7 @@ static int cmd_si(char * args){
 		steps = atoi(arg);
 		printf("%d\n", steps);
 		if(steps < 0){
-			printf("N must larger than 0\n");
+			printf("N must larger than or equal to 0\n");
 			return 0;
 		}
 	}
