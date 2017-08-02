@@ -40,7 +40,12 @@ static int cmd_help(char *args);
 
 static int cmd_si(char * args){
 	char *arg = strtok(NULL, " ");
-	
+	int steps = 1;
+	if(arg != NULL){
+		steps = atoi(arg);
+	}
+	cpu_exec(steps);
+	return 0;
 }
 static struct {
 	char *name;
