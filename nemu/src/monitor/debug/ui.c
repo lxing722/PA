@@ -103,7 +103,8 @@ static int cmd_info(char *args){
 /*Function for command p*/
 int cmd_p(char *args){
 	bool success = true;	
-	return expr(args,&success);
+	printf("%d\n",expr(args,&success));
+	return 0;
 }
 
 ///////////////////////////////////////////////////////
