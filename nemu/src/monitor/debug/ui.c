@@ -53,7 +53,8 @@ static int cmd_si(char * args){
 	cpu_exec(steps);
 	return 0;
 }
-void info_r(){
+/*Print all the registers' value*/
+static void info_all_r(){
 	int i = 0;
 	for(i = R_EAX; i <= R_EDI; i++){
 		printf("%s\t%x\t%d\n",regsl[i],reg_l(i),reg_l(i));
@@ -65,10 +66,31 @@ void info_r(){
 		printf("%s\t%x\t%d\n",regsb[i],reg_b(i),reg_b(i));
 	}
 }
+/*Print one specific register's value*/
+static int info_r(char *args){
+	char *arg = strtok(args,"$");
+	int i = 0;
+	for(i = R_EAX; i <= R_EDI; i++){
+		if(arg == regsl[i])
+			return reg_l(i);
+	}
+	for(i = R_AX; i <= R_DI; i++){
+		if(arg == regsw[i])
+			return reg_w(i);
+	}
+	for(i = R_AL; i <= R_BH; i++){
+		if(arg == regsb[i])
+			return reg_b(i);
+	}
+	return -1;
+}
 static int cmd_info(char *args){
-	char *arg = strtok(NULL, "");
+	char *arg = strtok(NULL, " ");
 	if(strcmp(arg, "r") == 0){
-		info_r();
+		info_all_r();
+	}
+	if(args[0] == '$'){
+		info_r(args);
 	}
 	if(strcmp(arg, "w") == 0){
 
