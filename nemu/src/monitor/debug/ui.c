@@ -56,13 +56,13 @@ static int cmd_si(char * args){
 void info_r(){
 	int i = 0;
 	for(i = R_EAX; i <= R_EDI; i++){
-		printf("%s\t%x\t%d",regsl[i],reg_l(i),reg_l(i));
+		printf("%s\t%x\t%d\n",regsl[i],reg_l(i),reg_l(i));
 	}
 	for(i = R_AX; i <= R_DI; i++){
-		printf("%s\t%x\t%d",regsw[i],reg_w(i),reg_w(i));
+		printf("%s\t%x\t%d\n",regsw[i],reg_w(i),reg_w(i));
 	}
 	for(i = R_AL; i <= R_BH; i++){
-		printf("%s\t%x\t%d",regsb[i],reg_b(i),reg_b(i));
+		printf("%s\t%x\t%d\n",regsb[i],reg_b(i),reg_b(i));
 	}
 }
 static int cmd_info(char *args){
