@@ -202,13 +202,13 @@ static int eval(int start, int end){
 		assert(0);
 	}
 	else if(start == end){
-		printf("%d\n",tokens[start].type);  ////test
-		printf("%s\n",tokens[start].str);   ////test
+		//printf("%d\n",tokens[start].type);  ////test
+		//printf("%s\n",tokens[start].str);   ////test
 		//printf("%d\n",atoi(tokens[start].str));   ///test
 		return atoi(tokens[start].str);
 	}
 	else if(check_parentheses(start, end)){
-		printf("%d\n",tokens[start].type); 
+		//printf("%d\n",tokens[start].type); 
 		return eval(start+1, end-1);
 	}
 	else{
