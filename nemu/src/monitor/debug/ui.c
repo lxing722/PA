@@ -90,7 +90,7 @@ static int cmd_info(char *args){
 		info_all_r();
 	}
 	if(args[0] == '$'){
-		info_r(args);
+		printf("%d",info_r(args));
 	}
 	if(strcmp(arg, "w") == 0){
 
