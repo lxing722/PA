@@ -191,7 +191,7 @@ static int domi_op(int start, int end){
 			domi = tokens[i].type;
 		}
 	}
-	printf("%d\n", pos);
+	//printf("%d\n", pos);
 	return pos;
 }
 
