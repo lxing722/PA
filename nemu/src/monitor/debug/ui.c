@@ -38,7 +38,7 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
-//////////my code
+////////////////////////////////////my code
 static int cmd_si(char * args){
 	char *arg = strtok(NULL, " ");
 	int steps = 1;
@@ -66,7 +66,7 @@ static void info_all_r(){
 		printf("%s\t%x\t%d\n",regsb[i],reg_b(i),reg_b(i));
 	}
 }
-/*Print one specific register's value*/
+/*Return one specific register's value*/
 static int info_r(char *args){
 	char *arg = strtok(args,"$");
 	int i = 0;
@@ -84,6 +84,7 @@ static int info_r(char *args){
 	}
 	return -1;
 }
+/*Function for command info*/
 static int cmd_info(char *args){
 	char *arg = strtok(NULL, " ");
 	if(strcmp(arg, "r") == 0){
@@ -98,7 +99,7 @@ static int cmd_info(char *args){
 	}
 	return 0;
 }
-/////////////
+///////////////////////////////////////////////////////
 static struct {
 	char *name;
 	char *description;
@@ -107,11 +108,11 @@ static struct {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
-	///////my code
+/////////////////////////////////////////////////////my code
 	{ "si", "Execute the program step by step", cmd_si},
 	{ "info", "Print revelent information", cmd_info},
 
-	////////////
+//////////////////////////////////////////////////////////
 	/* TODO: Add more commands */
 
 };
