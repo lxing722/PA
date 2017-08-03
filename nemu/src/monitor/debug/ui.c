@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
+ 
 void cpu_exec(uint32_t);
 
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
@@ -99,6 +99,12 @@ static int cmd_info(char *args){
 	}
 	return 0;
 }
+
+/*Function for command p*/
+int cmd_p(char *args){
+	return -1;
+}
+
 ///////////////////////////////////////////////////////
 static struct {
 	char *name;
@@ -111,7 +117,7 @@ static struct {
 /////////////////////////////////////////////////////my code
 	{ "si", "Execute the program step by step", cmd_si},
 	{ "info", "Print revelent information", cmd_info},
-
+	{ "p", "Compute a expression and return the result", cmd_p},
 //////////////////////////////////////////////////////////
 	/* TODO: Add more commands */
 
