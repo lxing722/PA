@@ -177,7 +177,7 @@ static bool is_operator(int type){
 }
 static int domi_op(int start, int end){
 	int pos = 0;
-	int domi = 10;
+	int domi = 300;
 	int i;
 	for(i = start; i <= end; i++){
 		if(tokens[i].type == OPENBAR){
