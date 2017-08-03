@@ -70,6 +70,7 @@ static void info_all_r(){
 static int info_r(char *arg){
 	//char *arg = strtok(args,"$");
 	int i = 0;
+	printf("%s\n", arg);
 	for(i = R_EAX; i <= R_EDI; i++){
 		if(arg == regsl[i])
 			return reg_l(i);
