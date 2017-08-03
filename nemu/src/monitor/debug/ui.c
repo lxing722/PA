@@ -53,10 +53,22 @@ static int cmd_si(char * args){
 	cpu_exec(steps);
 	return 0;
 }
+void info_r(){
+	int i = 0;
+	for(i = R_EAX; i <= R_EDI; i++){
+		printf("%s\t%x\t%d",regsl[i],reg_l(i),reg_l(i));
+	}
+	for(i = R_AX; i <= R_DI; i++){
+		printf("%s\t%x\t%d",regsw[i],reg_w(i),reg_w(i));
+	}
+	for(i = R_AL; i <= R_BH; i++){
+		printf("%s\t%x\t%d",regsb[i],reg_b(i),reg_b(i));
+	}
+}
 static int cmd_info(char *args){
 	char *arg = strtok(NULL, "");
 	if(strcmp(arg, "r") == 0){
-		printf("eax\t%X\t%u\n",cpu.eax, cpu.eax);
+		info_r();
 	}
 	if(strcmp(arg, "w") == 0){
 
