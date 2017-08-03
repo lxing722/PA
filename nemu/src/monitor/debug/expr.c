@@ -143,6 +143,8 @@ static int pop(){
 static bool check_parentheses(int start, int end){
 	init_stack();
 	int i;
+	if(tokens[start].type != OPENBAR || tokens[end].type != CLOSEBAR)
+		return false;
 	for(i = start; i <= end; i++){
 		if(tokens[i].type == OPENBAR)
 			push(tokens[i].type);
