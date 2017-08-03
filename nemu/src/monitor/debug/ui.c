@@ -67,8 +67,8 @@ static void info_all_r(){
 	}
 }
 /*Print one specific register's value*/
-static int info_r(char *args){
-	char *arg = strtok(args,"$");
+static int info_r(char *arg){
+	//char *arg = strtok(args,"$");
 	int i = 0;
 	for(i = R_EAX; i <= R_EDI; i++){
 		if(arg == regsl[i])
@@ -89,8 +89,8 @@ static int cmd_info(char *args){
 	if(strcmp(arg, "r") == 0){
 		info_all_r();
 	}
-	if(args[0] == '$'){
-		printf("%d",info_r(args));
+	if(args[0] == 'e'){
+		printf("%d\n",info_r(args));
 	}
 	if(strcmp(arg, "w") == 0){
 
