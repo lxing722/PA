@@ -197,6 +197,7 @@ static int eval(int start, int end){
 		assert(0);
 	}
 	else if(start == end){
+		printf("%d\n",tokens[start].type);
 		printf("%s\n",tokens[start].str);
 		printf("%d\n",atoi(tokens[start].str));
 		return atoi(tokens[start].str);
