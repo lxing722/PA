@@ -206,6 +206,7 @@ static int eval(int start, int end){
 		return atoi(tokens[start].str);
 	}
 	else if(check_parentheses(start, end)){
+		printf("%d\n",tokens[start].type); 
 		return eval(start+1, end-1);
 	}
 	else{
