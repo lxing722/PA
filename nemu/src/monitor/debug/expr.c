@@ -193,6 +193,8 @@ static int domi_op(int start, int end){
 }
 
 static int eval(int start, int end){
+	for(int i = 0; i < nr_token; i++)
+		printf("%d\n", tokens[i].type);  //////test
 	if(start > end){
 		assert(0);
 	}
