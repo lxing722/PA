@@ -102,7 +102,8 @@ static int cmd_info(char *args){
 
 /*Function for command p*/
 int cmd_p(char *args){
-	return -1;
+	bool success = true;	
+	return expr(args,&success);
 }
 
 ///////////////////////////////////////////////////////

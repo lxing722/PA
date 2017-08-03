@@ -1,5 +1,5 @@
 #include "nemu.h"
-
+#include<stdlib.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -191,9 +191,13 @@ static int domi_op(int start, int end){
 	}
 	return pos;
 }
+
 static int eval(int start, int end){
 	if(start > end){
 		assert(0);
+	}
+	else if(start == end){
+		return atoi(tokens[start].str);
 	}
 	else if(check_parentheses(start, end)){
 		return eval(start+1, end-1);
