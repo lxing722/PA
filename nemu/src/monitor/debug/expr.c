@@ -189,19 +189,20 @@ static int domi_op(int start, int end){
 			domi = tokens[i].type;
 		}
 	}
+	printf("%d\n", pos);
 	return pos;
 }
 
 static int eval(int start, int end){
-	for(int i = 0; i < nr_token; i++)
-		printf("%d\n", tokens[i].type);  //////test
+	//for(int i = 0; i < nr_token; i++)
+		//printf("%d\n", tokens[i].type);  //////test
 	if(start > end){
 		assert(0);
 	}
 	else if(start == end){
-		printf("%d\n",tokens[start].type);
-		printf("%s\n",tokens[start].str);
-		printf("%d\n",atoi(tokens[start].str));
+		printf("%d\n",tokens[start].type);  ////test
+		printf("%s\n",tokens[start].str);   ////test
+		//printf("%d\n",atoi(tokens[start].str));   ///test
 		return atoi(tokens[start].str);
 	}
 	else if(check_parentheses(start, end)){
