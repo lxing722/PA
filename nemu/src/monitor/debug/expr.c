@@ -197,6 +197,7 @@ static int eval(int start, int end){
 		assert(0);
 	}
 	else if(start == end){
+		printf("%d\n",atoi(tokens[start].str));
 		return atoi(tokens[start].str);
 	}
 	else if(check_parentheses(start, end)){
