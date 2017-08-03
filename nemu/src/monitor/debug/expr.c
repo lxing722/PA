@@ -5,9 +5,9 @@
  */
 #include <sys/types.h>
 #include <regex.h>
-
+#define MAX_SIZE 32
 enum {
-	NOTYPE = 256, NUM, EQ, PLUS, MINUS, POWER, DIVIDE, OPENBAR, CLOSEBAR
+	NOTYPE = 256, OPENBAR, NUM, EQ, PLUS, MINUS, POWER, DIVIDE, CLOSEBAR
 
 	/* TODO: Add more token types */
 
@@ -21,16 +21,17 @@ static struct rule {
 	/* TODO: Add more rules.
 	 * Pay attention to the precedence level of different rules.
 	 */
-
+//////////////////////////////mycode
 	{" +",	NOTYPE},                // spaces
+	{"\\(", OPENBAR},				// openbar
 	{"^[0-9]+", NUM},				// number
 	{"\\+", PLUS},					// plus
 	{"==", EQ},						// equal
 	{"\\-", MINUS},					// minus
 	{"\\*", POWER},					// power
 	{"\\/", DIVIDE},				// divide
-	{"\\{", OPENBAR},				// openbar
-	{"\\}", CLOSEBAR}, 				// closebar
+	{"\\)", CLOSEBAR}, 				// closebar
+////////////////////////////////////////
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -56,10 +57,10 @@ void init_regex() {
 
 typedef struct token {
 	int type;
-	char str[32];
+	char str[MAX_SIZE];
 } Token;
 
-Token tokens[32];
+Token tokens[MAX_SIZE];
 int nr_token;
 
 static bool make_token(char *e) {
@@ -85,6 +86,26 @@ static bool make_token(char *e) {
 				 */
 
 				switch(rules[i].token_type) {
+					case NOTYPE:
+						break;
+					case NUM:
+						tokens[nr_token].type = rules[i].token_type;
+						if(substr_len > MAX_SIZE)
+							assert(0);
+						int j;
+						for(j = 0; j < substr_len; j++)
+							tokens[nr_token].str[j] = e[position+j];
+						nr_token++;
+						break;
+					case OPENBAR:
+					case PLUS:
+					case EQ:
+					case MINUS:
+					case POWER:
+					case DIVIDE:
+					case CLOSEBAR:
+						tokens[nr_token++].type = rules[i].token_type;
+						break;
 					default: panic("please implement me");
 				}
 
@@ -100,15 +121,112 @@ static bool make_token(char *e) {
 
 	return true; 
 }
-
-uint32_t expr(char *e, bool *success) {
+static int stack[MAX_SIZE];
+static int stack_len = 0;
+static void init_stack(){
+	stack_len = 0;
+}
+static void push(int c){
+	if(stack_len == MAX_SIZE){
+		printf("Stack is full\n");
+		return;
+	}
+	stack[stack_len++] = c;
+}
+static int pop(){
+	if(stack_len == 0){
+		printf("Stack is empty\n");
+		return -1;
+	}	
+	return stack[stack_len--];
+}
+static bool check_parentheses(int start, int end){
+	init_stack();
+	int i;
+	for(i = start; i <= end; i++){
+		if(tokens[i].type == OPENBAR)
+			push(tokens[i].type);
+		if(tokens[i].type == CLOSEBAR){
+			if(stack_len == 1&&i != end)
+				return false;
+			pop();
+		}
+	}
+	return true;
+}
+static bool check_bar(){
+	init_stack();
+	int i;
+	for(i = 0; i < nr_token; i++){
+		if(tokens[i].type == OPENBAR)
+			push(tokens[i].type);
+		else if(tokens[i].type == CLOSEBAR){
+			if(stack_len == 0)
+				return false;
+			pop();
+		}
+	}
+	if(stack_len != 0)
+		return false;
+	return true;
+}
+static bool is_operator(int type){
+	if(type == PLUS || type == DIVIDE || type == POWER || type  == MINUS)
+		 return true;
+	return false;
+}
+static int domi_op(int start, int end){
+	int pos = 0;
+	int domi = 10;
+	int i;
+	for(i = start; i <= end; i++){
+		if(tokens[i].type == OPENBAR){
+			while(tokens[i].type != CLOSEBAR)
+				i++;
+		}
+		if(is_operator(tokens[i].type) && tokens[i].type <= domi){
+			pos = i;
+			domi = tokens[i].type;
+		}
+	}
+	return pos;
+}
+static int eval(int start, int end){
+	if(start > end){
+		assert(0);
+	}
+	else if(check_parentheses(start, end)){
+		return eval(start+1, end-1);
+	}
+	else{
+		int op = domi_op(start, end);
+		int val1 = eval(start, op-1);
+		int val2 = eval(op+1, end);
+		switch(tokens[op].type){
+			case PLUS:return val1 + val2;
+			case MINUS:return val1 - val2;
+			case POWER: return val1 * val2;
+			case DIVIDE:
+				assert(val2);
+				return val1 / val2;
+			default:assert(0);
+		}
+	}
+}
+/////////////////////////////////////////
+int expr(char *e, bool *success) {
 	if(!make_token(e)) {
 		*success = false;
 		return 0;
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
+	if(!check_bar(e)){
+		*success = false;
+		return 0;
+	}
+
 	panic("please implement me");
-	return 0;
+	return eval(0,nr_token-1);
 }
 
