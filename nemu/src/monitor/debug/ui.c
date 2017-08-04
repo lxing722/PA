@@ -114,7 +114,7 @@ int cmd_x(char *args){
 	bool success = true;
 	int addr = expr(arg,&success);
 	for(i = 0; i < atoi(num); i++){
-		printf("0x%x\t",swaddr_read(addr+i, 4));
+		printf("0x%x\t",swaddr_read(addr+i, 1));
 	}
 	printf("\n");
 	return 0;
