@@ -307,7 +307,7 @@ int expr(char *e, bool *success) {
 	for(i = 0; i < nr_token; i++){
 		if(tokens[i].type == POWER && (i == 0 || is_operator(tokens[i].type)))
 			tokens[i].type = DEREF;
-		if(tokens[i].type == UNARYMINUS && (i == 0 || is_operator(tokens[i].type)))
+		if(tokens[i].type == MINUS && (i == 0 || is_operator(tokens[i].type)))
 			tokens[i].type = UNARYMINUS;
 	}
 
