@@ -25,6 +25,7 @@ WP* new_wp(){
 	WP *temp = free_;
 	free_ = free_->next;
 	temp->next = NULL;
+	printf("good\n");
 	return temp;
 }
 
@@ -51,6 +52,7 @@ void free_wp(int N){
 
 void set_wp(char *args){
 	WP *p = new_wp();
+	printf("good\n");
 	strcpy(p->exprs, args);
 	bool success = true;
 	p->sum = expr(args,&success);
