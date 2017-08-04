@@ -54,11 +54,7 @@ static int cmd_si(char *args){
 			return 0;
 		}
 	}
-	while(steps--){
-		cpu_exec(1);
-		if(check_wp() == -1)
-			nemu_state = STOP;
-	}
+	cpu_exec(steps);
 	return 0;
 }
 /*Print all the registers' value*/
