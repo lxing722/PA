@@ -109,7 +109,9 @@ int cmd_p(char *args){
 int cmd_x(char *args){
 	char *num = strtok(NULL," ");
 	char *arg = strtok(NULL," ");
-	printf("0x%x\n",swaddr_read(cmd_p(arg), atoi(num)));
+	int i;
+	for(i = 0; i < atoi(num); i++)
+		printf("0x%x\n",swaddr_read(cmd_p(arg), 4));
 	return 0;
 }
 ///////////////////////////////////////////////////////
