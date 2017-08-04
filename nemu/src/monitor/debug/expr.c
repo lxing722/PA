@@ -262,15 +262,20 @@ static int eval(int start, int end){
 	else{
 		int op = domi_op(start, end);
 		if(tokens[op].type == NOT || tokens[op].type == DEREF || tokens[op].type == UNARYMINUS){
-			int val = eval(op+1,end);
+			
 			if(tokens[op].type == NOT){
+				int val = eval(op+1,end);
 				return !val;
 			}			
 			else if(tokens[op].type == UNARYMINUS){
+				int val = eval(op+1,end);
 				return -val;
 			}
-			//else
-				//return *val;
+			else{
+				int *val = (int *)eval(op+1,end);
+				return *val;
+			}
+				
 		}
 		int val1 = eval(start, op-1);
 		int val2 = eval(op+1, end);
