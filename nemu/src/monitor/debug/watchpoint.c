@@ -83,8 +83,7 @@ int check_wp(){
 		while(temp != NULL){
 			bool success = true;
 			int num = expr(temp->exprs,&success);
-			printf("%d  %d\n",num,temp->sum);
-			if(num == temp->sum){
+			if(num != temp->sum){
 				return temp->NO;
 			}
 		}

@@ -137,6 +137,7 @@ int cmd_w(char *args){
 	set_wp(args);
 	return 0;
 }
+/*Function for command d*/
 int cmd_d(char *args){
 	int num = atoi(args);
 	free_wp(num);
@@ -219,7 +220,6 @@ void ui_mainloop() {
 				break;
 			}
 		}
-
 		if(i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
 	}
 }
