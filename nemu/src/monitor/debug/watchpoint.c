@@ -70,7 +70,7 @@ void set_wp(char *args){
 void print_wp(){
 	if(head != NULL){
 		WP *temp = head;
-		printf("num    what\n");
+		printf("num     what\n");
 		while(temp != NULL){
 			printf("%d\t%s\n",temp->NO,temp->exprs);
 			temp = temp->next;
