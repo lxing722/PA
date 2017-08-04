@@ -67,7 +67,7 @@ static void info_all_r(){
 	}
 }
 /*Return one specific register's value*/
-static int info_r(char *args){
+int info_r(char *args){
 	char *arg = strtok(args,"$");
 	int i = 0;
 	for(i = R_EAX; i <= R_EDI; i++){

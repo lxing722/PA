@@ -6,8 +6,9 @@
 #include <sys/types.h>
 #include <regex.h>
 #define MAX_SIZE 32
+int info_r(char *args);
 enum {
-	NOTYPE = 256, OPENBAR, NUM, EQ, PLUS, MINUS, POWER, DIVIDE, CLOSEBAR
+	NOTYPE = 256, OPENBAR, VARIABLE, NUM, EQ, PLUS, MINUS, POWER, DIVIDE, CLOSEBAR
 
 	/* TODO: Add more token types */
 
@@ -24,6 +25,7 @@ static struct rule {
 //////////////////////////////mycode
 	{" +",	NOTYPE},                // spaces
 	{"\\(", OPENBAR},				// openbar
+	{"$[a-z]+", VARIABLE},			// variable
 	{"^[0-9]+", NUM},				// number
 	{"\\+", PLUS},					// plus
 	{"==", EQ},						// equal
@@ -88,6 +90,7 @@ static bool make_token(char *e) {
 				switch(rules[i].token_type) {
 					case NOTYPE:
 						break;
+					case VARIABLE:
 					case NUM:
 						tokens[nr_token].type = rules[i].token_type;
 						if(substr_len > MAX_SIZE)
@@ -96,13 +99,17 @@ static bool make_token(char *e) {
 						for(j = 0; j < substr_len; j++)
 							tokens[nr_token].str[j] = substr_start[j];
 						nr_token++;
-						break;
-					case OPENBAR:
-					case PLUS:
-					case EQ:
+						break;					
+					case PLUS:									
 					case MINUS:
+						tokens[nr_token].str[0] = '2';
+						tokens[nr_token++].type = rules[i].token_type;
+						break;		
 					case POWER:
 					case DIVIDE:
+						tokens[nr_token].str[0] = '4';
+					case EQ:
+					case OPENBAR:
 					case CLOSEBAR:
 						tokens[nr_token++].type = rules[i].token_type;
 						break;
@@ -179,16 +186,16 @@ static bool is_operator(int type){
 }
 static int domi_op(int start, int end){
 	int pos = 0;
-	int domi = 300;
+	int domi = 10;
 	int i;
 	for(i = start; i <= end; i++){
 		if(tokens[i].type == OPENBAR){
 			while(tokens[i].type != CLOSEBAR)
 				i++;
 		}
-		if(is_operator(tokens[i].type) && tokens[i].type <= domi){
+		if(is_operator(tokens[i].type) && tokens[i].str[0]-'0' <= domi){
 			pos = i;
-			domi = tokens[i].type;
+			domi = tokens[i].str[0]-'0';
 		}
 	}
 	//printf("%d\n", pos);
@@ -205,6 +212,8 @@ static int eval(int start, int end){
 		//printf("%d\n",tokens[start].type);  ////test
 		//printf("%s\n",tokens[start].str);   ////test
 		//printf("%d\n",atoi(tokens[start].str));   ///test
+		if(tokens[start].str[0] == '$')
+			return info_r(tokens[start].str);
 		return atoi(tokens[start].str);
 	}
 	else if(check_parentheses(start, end)){
