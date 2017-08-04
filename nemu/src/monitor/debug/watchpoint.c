@@ -83,7 +83,7 @@ int check_wp(){
 		while(temp != NULL){
 			bool success = true;
 			int num = expr(temp->exprs,&success);
-			if(num != temp->sum){
+			if(num == temp->sum){
 				return -1;
 			}
 		}
