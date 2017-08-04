@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #define MAX_SIZE 32
-
+uint32_t swaddr_read(swaddr_t addr, size_t len);
 int info_r(char *args);
 enum {
 	NOTYPE = 256, OPENBAR, VARIABLE, NUM, EQ, NQ, AND, OR, NOT, DEREF, PLUS, MINUS, POWER, UNARYMINUS, DIVIDE, CLOSEBAR
@@ -284,10 +284,8 @@ static int eval(int start, int end){
 				return -val;
 			}
 			else{
-				int *val1 = (int *)val;
-				return *val1;
-			}
-				
+				return swaddr_read(val,1);
+			}				
 		}
 		int val1 = eval(start, op-1);
 		int val2 = eval(op+1, end);
