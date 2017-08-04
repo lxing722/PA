@@ -11,6 +11,7 @@ void cpu_exec(uint32_t);
 void init_wp_pool();
 void free_wp(int N);
 void set_wp(char *args);
+void print_wp();
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -100,7 +101,7 @@ static int cmd_info(char *args){
 		printf("%s: 0x%x\t%d\n",args,temp,temp);
 	}
 	if(strcmp(arg, "w") == 0){
-
+		print_wp();
 	}
 	return 0;
 }
