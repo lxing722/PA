@@ -247,6 +247,7 @@ static int my_atoi(char *args){
 	for(i = 0;i < strlen(num); i++){
 		if(num[i] >= '0' && num[i] <= '9'){
 			sum = sum*16 + num[i]-'0';
+			printf("error\n");
 		}
 		if(num[i] >= 'a' && num[i] <= 'f'){
 			sum = sum*16 + num[i]-87;
