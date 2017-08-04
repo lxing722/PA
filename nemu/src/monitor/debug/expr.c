@@ -241,17 +241,14 @@ static int domi_op(int start, int end){
 	return pos;
 }
 static int my_atoi(char *args){
-	char *num = strtok(args,"0x");
-	printf("%s\n", num);
 	int i;
 	int sum = 0;
-	for(i = 0;i < strlen(num); i++){
-		if(num[i] >= '0' && num[i] <= '9'){
-			sum = sum*16 + num[i]-'0';
-			printf("error\n");
+	for(i = 2;i < strlen(args); i++){
+		if(args[i] >= '0' && args[i] <= '9'){
+			sum = sum*16 + args[i]-'0';
 		}
-		if(num[i] >= 'a' && num[i] <= 'f'){
-			sum = sum*16 + num[i]-87;
+		if(args[i] >= 'a' && args[i] <= 'f'){
+			sum = sum*16 + args[i]-87;
 		}
 	}
 	return sum;
