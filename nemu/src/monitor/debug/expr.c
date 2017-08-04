@@ -25,7 +25,7 @@ static struct rule {
 //////////////////////////////mycode
 	{" +",	NOTYPE},                // spaces
 	{"\\(", OPENBAR},				// openbar
-	{"$[a-z]+", VARIABLE},			// variable
+	{"\\$[a-z]+", VARIABLE},			// variable
 	{"^[0-9]+", NUM},				// number
 	{"\\+", PLUS},					// plus
 	{"==", EQ},						// equal
