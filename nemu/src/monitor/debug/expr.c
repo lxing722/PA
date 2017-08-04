@@ -242,6 +242,7 @@ static int domi_op(int start, int end){
 }
 static int my_atoi(char *args){
 	char *num = strtok(args,"0x");
+	printf("%s\n", num);
 	int i;
 	int sum = 0;
 	for(i = 0;i < strlen(num); i++){
