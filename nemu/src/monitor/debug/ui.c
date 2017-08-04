@@ -57,13 +57,13 @@ static int cmd_si(char * args){
 static void info_all_r(){
 	int i = 0;
 	for(i = R_EAX; i <= R_EDI; i++){
-		printf("%s\t%x\t%d\n",regsl[i],reg_l(i),reg_l(i));
+		printf("%s\t0x%x\t%d\n",regsl[i],reg_l(i),reg_l(i));
 	}
 	for(i = R_AX; i <= R_DI; i++){
-		printf("%s\t%x\t%d\n",regsw[i],reg_w(i),reg_w(i));
+		printf("%s\t0x%x\t%d\n",regsw[i],reg_w(i),reg_w(i));
 	}
 	for(i = R_AL; i <= R_BH; i++){
-		printf("%s\t%x\t%d\n",regsb[i],reg_b(i),reg_b(i));
+		printf("%s\t0x%x\t%d\n",regsb[i],reg_b(i),reg_b(i));
 	}
 }
 /*Return one specific register's value*/
@@ -92,7 +92,7 @@ static int cmd_info(char *args){
 	}
 	if(args[0] == '$'){
 		int temp = info_r(args);
-		printf("%x\t%d\n",temp,temp);
+		printf("0x%x\t%d\n",temp,temp);
 	}
 	if(strcmp(arg, "w") == 0){
 
@@ -106,7 +106,12 @@ int cmd_p(char *args){
 	printf("%d\n",expr(args,&success));
 	return 0;
 }
-
+int cmd_x(char *args){
+	char *num = strtok(NULL," ");
+	char *arg = strtok(NULL," ");
+	printf("0x%x\n",swaddr_read(cmd_p(arg), atoi(num)));
+	return 0;
+}
 ///////////////////////////////////////////////////////
 static struct {
 	char *name;
@@ -120,6 +125,7 @@ static struct {
 	{ "si", "Execute the program step by step", cmd_si},
 	{ "info", "Print revelent information", cmd_info},
 	{ "p", "Compute a expression and return the result", cmd_p},
+	{ "x", "Read the memory", cmd_x},
 //////////////////////////////////////////////////////////
 	/* TODO: Add more commands */
 
