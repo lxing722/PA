@@ -23,7 +23,7 @@ static struct rule {
 	/* TODO: Add more rules.
 	 * Pay attention to the precedence level of different rules.
 	 */
-//////////////////////////////mycode
+///////////////////////////////////mycode
 	{" +",	NOTYPE},                // spaces
 	{"\\(", OPENBAR},				// openbar
 	{"\\$[a-z]+", VARIABLE},		// variable
@@ -144,7 +144,7 @@ static bool make_token(char *e) {
 				break;
 			}
 		}
-///////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 		if(i == NR_REGEX) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
@@ -237,7 +237,6 @@ static int domi_op(int start, int end){
 			domi = tokens[i].str[0]-'0';
 		}
 	}
-	//printf("%d\n", pos);
 	return pos;
 }
 static int my_atoi(char *args){
@@ -254,15 +253,10 @@ static int my_atoi(char *args){
 	return sum;
 }
 static int eval(int start, int end){
-	//for(int i = 0; i < nr_token; i++)
-		//printf("%d\n", tokens[i].type);  //////test
 	if(start > end){
 		assert(0);
 	}
 	else if(start == end){
-		//printf("%d\n",tokens[start].type);  ////test
-		//printf("%s\n",tokens[start].str);   ////test
-		//printf("%d\n",atoi(tokens[start].str));   ///test
 		if(tokens[start].str[0] == '$')
 			return info_r(tokens[start].str);
 		else if(strlen(tokens[start].str) > 1 && tokens[start].str[0] == '0' && tokens[start].str[1] == 'x')
@@ -270,7 +264,6 @@ static int eval(int start, int end){
 		return atoi(tokens[start].str);
 	}
 	else if(check_parentheses(start, end)){
-		//printf("%d\n",tokens[start].type); 
 		return eval(start+1, end-1);
 	}
 	else{

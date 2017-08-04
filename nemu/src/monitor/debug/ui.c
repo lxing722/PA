@@ -43,6 +43,7 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 ////////////////////////////////////my code
+/*Function for command si*/
 static int cmd_si(char *args){
 	char *arg = strtok(NULL, " ");
 	int steps = 1;
@@ -153,6 +154,7 @@ static struct {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
+	/* TODO: Add more commands */
 /////////////////////////////////////////////////////my code
 	{ "si", "Execute the program step by step", cmd_si},
 	{ "info", "Print revelent information", cmd_info},
@@ -161,7 +163,7 @@ static struct {
 	{ "w", "Set watchpoint", cmd_w},
 	{ "d", "Delete watchpoint", cmd_d},
 //////////////////////////////////////////////////////////
-	/* TODO: Add more commands */
+	
 
 };
 
