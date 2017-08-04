@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #define MAX_SIZE 32
+
 int info_r(char *args);
 enum {
 	NOTYPE = 256, OPENBAR, VARIABLE, NUM, EQ, PLUS, MINUS, POWER, DIVIDE, CLOSEBAR
@@ -86,7 +87,7 @@ static bool make_token(char *e) {
 				 * to record the token in the array ``tokens''. For certain 
 				 * types of tokens, some extra actions should be performed.
 				 */
-
+/////////////////////////////////////////////////////////////////my code
 				switch(rules[i].token_type) {
 					case NOTYPE:
 						break;
@@ -119,7 +120,7 @@ static bool make_token(char *e) {
 				break;
 			}
 		}
-
+///////////////////////////////////////////////////////////////////////
 		if(i == NR_REGEX) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
@@ -128,6 +129,7 @@ static bool make_token(char *e) {
 
 	return true; 
 }
+/////////////////////////////////////////////////////////////////////////////my code
 static int stack[MAX_SIZE];
 static int stack_len = 0;
 static void init_stack(){
@@ -235,7 +237,7 @@ static int eval(int start, int end){
 		}
 	}
 }
-/////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 int expr(char *e, bool *success) {
 	if(!make_token(e)) {
 		*success = false;
@@ -245,6 +247,7 @@ int expr(char *e, bool *success) {
 	/* TODO: Insert codes to evaluate the expression. */
 	if(!check_bar(e)){
 		*success = false;
+		printf("Bars match error\n");
 		return 0;
 	}
 
