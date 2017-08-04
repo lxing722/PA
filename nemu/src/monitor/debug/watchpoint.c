@@ -24,6 +24,7 @@ WP* new_wp(){
 		assert(0);
 	WP *temp = free_;
 	free_ = free_->next;
+	temp->next = NULL;
 	return temp;
 }
 
@@ -50,7 +51,7 @@ void free_wp(int N){
 
 void set_wp(char *args){
 	WP *p = new_wp();
-	p->exprs = args;
+	strcpy(p->exprs, args);
 	bool success = true;
 	p->sum = expr(args,&success);
 	if(success == false)
