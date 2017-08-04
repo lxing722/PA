@@ -112,9 +112,11 @@ int cmd_x(char *args){
 	char *arg = strtok(NULL," ");
 	int i;
 	bool success = true;
+	int addr = expr(arg,&success);
 	for(i = 0; i < atoi(num); i++){
-		printf("0x%x\t",swaddr_read(expr(arg,&success)+i, 4));
+		printf("0x%x\t",swaddr_read(addr+i, 4));
 	}
+	printf("\n");
 	return 0;
 }
 ///////////////////////////////////////////////////////
