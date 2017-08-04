@@ -82,6 +82,7 @@ int info_r(char *args){
 		if(strcmp(arg,regsb[i]) == 0)
 			return reg_b(i);
 	}
+	printf("Register error\n");
 	return -1;
 }
 /*Function for command info*/
@@ -92,6 +93,8 @@ static int cmd_info(char *args){
 	}
 	if(args[0] == '$'){
 		int temp = info_r(args);
+		if(temp == -1)
+			return 0;
 		printf("%s: 0x%x\t%d\n",args,temp,temp);
 	}
 	if(strcmp(arg, "w") == 0){
