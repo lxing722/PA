@@ -217,6 +217,7 @@ static bool is_operator(int type){
 		case OR:
 		case NOT:
 		case DEREF:
+		case UNARYMINUS:
 			return true;
 		default:
 			return false;
