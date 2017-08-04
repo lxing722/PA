@@ -244,7 +244,7 @@ static int my_atoi(char *args){
 	char *num = strtok(args,"0x");
 	int i;
 	int sum = 0;
-	for(i = strlen(num)-1;i >= 0; i--){
+	for(i = 0;i < strlen(num); i++){
 		if(num[i] >= '0' && num[i] <= '9'){
 			sum = sum*16 + num[i]-'0';
 		}
