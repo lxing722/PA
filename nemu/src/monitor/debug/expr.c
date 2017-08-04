@@ -27,7 +27,7 @@ static struct rule {
 	{" +",	NOTYPE},                // spaces
 	{"\\(", OPENBAR},				// openbar
 	{"\\$[a-z]+", VARIABLE},		// variable
-	{"^[0-9]+", NUM},				// number
+	{"^[0-9]+|0x[a-f0-9]+", NUM},   // number
 	{"\\+", PLUS},					// plus
 	{"==", EQ},						// equal
 	{"!=", NQ},						// not equal
@@ -240,7 +240,20 @@ static int domi_op(int start, int end){
 	//printf("%d\n", pos);
 	return pos;
 }
-
+static int my_atoi(char *args){
+	char *num = strtok(args,"0x");
+	int i;
+	int sum = 0;
+	for(i = 0;i <= strlen(num); i++){
+		if(num[i] >= '0' && num[i] <= '9'){
+			sum = sum*16 + num[i]-'0';
+		}
+		if(num[i] >= 'a' && num[i] <= 'f'){
+			sum = sum*16 + num[i]-87;
+		}
+	}
+	return sum;
+}
 static int eval(int start, int end){
 	//for(int i = 0; i < nr_token; i++)
 		//printf("%d\n", tokens[i].type);  //////test
@@ -253,6 +266,8 @@ static int eval(int start, int end){
 		//printf("%d\n",atoi(tokens[start].str));   ///test
 		if(tokens[start].str[0] == '$')
 			return info_r(tokens[start].str);
+		else if(strlen(tokens[start].str) > 1 && tokens[start].str[0] == '0' && tokens[start].str[1] == 'x')
+			return my_atoi(tokens[start].str);
 		return atoi(tokens[start].str);
 	}
 	else if(check_parentheses(start, end)){
