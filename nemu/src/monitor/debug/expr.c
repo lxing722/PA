@@ -9,7 +9,7 @@
 
 int info_r(char *args);
 enum {
-	NOTYPE = 256, OPENBAR, VARIABLE, NUM, EQ, PLUS, MINUS, POWER, DIVIDE, CLOSEBAR
+	NOTYPE = 256, OPENBAR, VARIABLE, NUM, EQ, NQ, AND, OR, NOT, DEREF, PLUS, MINUS, POWER, DIVIDE, CLOSEBAR
 
 	/* TODO: Add more token types */
 
@@ -26,10 +26,14 @@ static struct rule {
 //////////////////////////////mycode
 	{" +",	NOTYPE},                // spaces
 	{"\\(", OPENBAR},				// openbar
-	{"\\$[a-z]+", VARIABLE},			// variable
+	{"\\$[a-z]+", VARIABLE},		// variable
 	{"^[0-9]+", NUM},				// number
 	{"\\+", PLUS},					// plus
 	{"==", EQ},						// equal
+	{"!=", NQ},						// not equal
+	{"&&", AND},					// and
+	{"\\|\\|", OR},					// or
+	{"\\!", NOT},					// not
 	{"\\-", MINUS},					// minus
 	{"\\*", POWER},					// power
 	{"\\/", DIVIDE},				// divide
@@ -100,16 +104,33 @@ static bool make_token(char *e) {
 						for(j = 0; j < substr_len; j++)
 							tokens[nr_token].str[j] = substr_start[j];
 						nr_token++;
+						break;
+					case OR:
+						tokens[nr_token].str[0] = '0';
+						tokens[nr_token++].type = rules[i].token_type;
+						break;
+					case AND:
+						tokens[nr_token].str[0] = '1';
+						tokens[nr_token++].type = rules[i].token_type;
+						break;
+					case EQ:
+					case NQ:					
+						tokens[nr_token].str[0] = '2';
+						tokens[nr_token++].type = rules[i].token_type;
 						break;					
 					case PLUS:									
 					case MINUS:
-						tokens[nr_token].str[0] = '2';
+						tokens[nr_token].str[0] = '3';
 						tokens[nr_token++].type = rules[i].token_type;
 						break;		
 					case POWER:
 					case DIVIDE:
 						tokens[nr_token].str[0] = '4';
-					case EQ:
+						tokens[nr_token++].type = rules[i].token_type;
+						break;
+					case NOT:
+					case DEREF:
+						tokens[nr_token].str[0] = '5';
 					case OPENBAR:
 					case CLOSEBAR:
 						tokens[nr_token++].type = rules[i].token_type;
@@ -131,7 +152,7 @@ static bool make_token(char *e) {
 }
 /////////////////////////////////////////////////////////////////////////////my code
 static int stack[MAX_SIZE];
-static int stack_len = 0;
+static unsigned int stack_len = 0;
 static void init_stack(){
 	stack_len = 0;
 }
@@ -182,9 +203,21 @@ static bool check_bar(){
 	return true;
 }
 static bool is_operator(int type){
-	if(type == PLUS || type == DIVIDE || type == POWER || type  == MINUS)
-		 return true;
-	return false;
+	switch(type){
+		case PLUS:
+		case DIVIDE:
+		case POWER:
+		case MINUS:
+		case EQ:
+		case NQ:
+		case AND:
+		case OR:
+		case NOT:
+		case DEREF:
+			return true;
+		default:
+			return false;
+	}
 }
 static int domi_op(int start, int end){
 	int pos = 0;
@@ -224,12 +257,23 @@ static int eval(int start, int end){
 	}
 	else{
 		int op = domi_op(start, end);
+		if(tokens[op].type == NOT || tokens[op].type == DEREF){
+			int val = eval(op+1,end);
+			if(tokens[op].type == NOT)
+				return !val;
+			//else
+				//return *val;
+		}
 		int val1 = eval(start, op-1);
 		int val2 = eval(op+1, end);
 		switch(tokens[op].type){
 			case PLUS:return val1 + val2;
 			case MINUS:return val1 - val2;
 			case POWER: return val1 * val2;
+			case EQ: return val1 == val2;
+			case NQ: return val1 != val2;
+			case AND: return val1 && val2;
+			case OR: return val1 || val2;
 			case DIVIDE:
 				assert(val2);
 				return val1 / val2;
@@ -239,16 +283,22 @@ static int eval(int start, int end){
 }
 //////////////////////////////////////////////////////////////
 int expr(char *e, bool *success) {
+	if(!check_bar(e)){
+		*success = false;
+		printf("Bars match error\n");
+		return 0;
+	}
+
 	if(!make_token(e)) {
 		*success = false;
 		return 0;
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
-	if(!check_bar(e)){
-		*success = false;
-		printf("Bars match error\n");
-		return 0;
+	int i;
+	for(i = 0; i < nr_token; i++){
+		if(tokens[i].type == POWER && (i == 0 || is_operator(tokens[i].type)))
+			tokens[i].type = DEREF;
 	}
 
 	//panic("please implement me");
