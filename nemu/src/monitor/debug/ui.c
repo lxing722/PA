@@ -106,6 +106,7 @@ int cmd_p(char *args){
 	printf("%d\n",expr(args,&success));
 	return 0;
 }
+/*Function for command x*/
 int cmd_x(char *args){
 	char *num = strtok(NULL," ");
 	char *arg = strtok(NULL," ");
