@@ -113,7 +113,7 @@ int cmd_x(char *args){
 	int i;
 	bool success = true;
 	for(i = 0; i < atoi(num); i++){
-		printf("0x%x\n",swaddr_read(expr(arg,&success), 4));
+		printf("0x%x\t",swaddr_read(expr(arg,&success)+i, 4));
 	}
 	return 0;
 }
