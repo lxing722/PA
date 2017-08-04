@@ -9,7 +9,7 @@
 
 int info_r(char *args);
 enum {
-	NOTYPE = 256, OPENBAR, VARIABLE, NUM, EQ, NQ, AND, OR, NOT, DEREF, PLUS, MINUS, POWER, DIVIDE, CLOSEBAR
+	NOTYPE = 256, OPENBAR, VARIABLE, NUM, EQ, NQ, AND, OR, NOT, DEREF, PLUS, MINUS, POWER, UNARYMINUS, DIVIDE, CLOSEBAR
 
 	/* TODO: Add more token types */
 
@@ -131,13 +131,16 @@ static bool make_token(char *e) {
 					case NOT:
 					case DEREF:
 						tokens[nr_token].str[0] = '5';
+						tokens[nr_token++].type = rules[i].token_type;
+						break;
+					case UNARYMINUS:
+						tokens[nr_token].str[0] = '6';
 					case OPENBAR:
 					case CLOSEBAR:
 						tokens[nr_token++].type = rules[i].token_type;
 						break;
 					default: panic("please implement me");
 				}
-
 				break;
 			}
 		}
@@ -257,10 +260,14 @@ static int eval(int start, int end){
 	}
 	else{
 		int op = domi_op(start, end);
-		if(tokens[op].type == NOT || tokens[op].type == DEREF){
+		if(tokens[op].type == NOT || tokens[op].type == DEREF || tokens[op].type == UNARYMINUS){
 			int val = eval(op+1,end);
-			if(tokens[op].type == NOT)
+			if(tokens[op].type == NOT){
 				return !val;
+			}			
+			else if(tokens[op].type == UNARYMINUS){
+				return -val;
+			}
 			//else
 				//return *val;
 		}
@@ -299,6 +306,8 @@ int expr(char *e, bool *success) {
 	for(i = 0; i < nr_token; i++){
 		if(tokens[i].type == POWER && (i == 0 || is_operator(tokens[i].type)))
 			tokens[i].type = DEREF;
+		if(tokens[i].type == UNARYMINUS && (i == 0 || is_operator(tokens[i].type)))
+			tokens[i].type = UNARYMINUS;
 	}
 
 	//panic("please implement me");
