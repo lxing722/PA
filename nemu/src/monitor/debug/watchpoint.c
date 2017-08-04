@@ -70,13 +70,26 @@ void set_wp(char *args){
 void print_wp(){
 	if(head != NULL){
 		WP *temp = head;
+		printf("num    what\n");
 		while(temp != NULL){
 			printf("%d\t%s\n",temp->NO,temp->exprs);
 			temp = temp->next;
 		}
 	}
 }
-
+int check_wp(){
+	if(head != NULL){
+		WP *temp = head;
+		while(temp != NULL){
+			bool success = true;
+			int num = expr(temp->exprs,&success);
+			if(num != temp->sum){
+				return -1;
+			}
+		}
+	}
+	return 0;
+}
 
 
 

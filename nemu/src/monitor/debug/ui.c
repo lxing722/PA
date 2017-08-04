@@ -12,6 +12,7 @@ void init_wp_pool();
 void free_wp(int N);
 void set_wp(char *args);
 void print_wp();
+int check_wp();
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -53,7 +54,11 @@ static int cmd_si(char * args){
 			return 0;
 		}
 	}
-	cpu_exec(steps);
+	while(steps--){
+		cpu_exec(1);
+		if(check_wp() == -1)
+			nemu_state = STOP;
+	}
 	return 0;
 }
 /*Print all the registers' value*/
@@ -141,18 +146,7 @@ int cmd_d(char *args){
 	free_wp(num);
 	return 0;
 }
-/*void exec(){
-	if(head != NULL){
-		WP *temp = head;
-		while(temp != NULL){
-			bool success = true;
-			int num = expr(temp->exprs,&success);
-			if(num != temp->sum){
-				nemu_state = STOP;
-			}
-		}
-	}
-}*/
+/**/
 ///////////////////////////////////////////////////////
 static struct {
 	char *name;
