@@ -8,7 +8,9 @@
 #include <readline/history.h>
  
 void cpu_exec(uint32_t);
-
+void init_wp_pool();
+void free_wp(int N);
+void set_wp(char *args);
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -105,8 +107,11 @@ static int cmd_info(char *args){
 
 /*Function for command p*/
 int cmd_p(char *args){
-	bool success = true;	
-	printf("%d\n",expr(args,&success));
+	bool success = true;
+	int num = expr(args,&success);	
+	if(success == false)
+		return 0;
+	printf("%d\n",num);
 	return 0;
 }
 /*Function for command x*/
@@ -116,6 +121,8 @@ int cmd_x(char *args){
 	int i;
 	bool success = true;
 	int addr = expr(arg,&success);
+	if(success == false)
+		return 0;
 	printf("0x%x: ",addr);
 	for(i = 0; i < atoi(num); i++){
 		printf("0x%x\t",swaddr_read(addr+i, 1));
@@ -123,6 +130,28 @@ int cmd_x(char *args){
 	printf("\n");
 	return 0;
 }
+/*Function for command w*/
+int cmd_w(char *args){
+	set_wp(args);
+	return 0;
+}
+int cmd_d(char *args){
+	int num = atoi(args);
+	free_wp(num);
+	return 0;
+}
+/*void exec(){
+	if(head != NULL){
+		WP *temp = head;
+		while(temp != NULL){
+			bool success = true;
+			int num = expr(temp->exprs,&success);
+			if(num != temp->sum){
+				nemu_state = STOP;
+			}
+		}
+	}
+}*/
 ///////////////////////////////////////////////////////
 static struct {
 	char *name;
@@ -137,6 +166,8 @@ static struct {
 	{ "info", "Print revelent information", cmd_info},
 	{ "p", "Compute a expression and return the result", cmd_p},
 	{ "x", "Read the memory", cmd_x},
+	{ "w", "Set watchpoint", cmd_w},
+	{ "d", "Delete watchpoint", cmd_d},
 //////////////////////////////////////////////////////////
 	/* TODO: Add more commands */
 
@@ -168,6 +199,7 @@ static int cmd_help(char *args) {
 }
 
 void ui_mainloop() {
+	init_wp_pool();
 	while(1) {
 		char *str = rl_gets();
 		char *str_end = str + strlen(str);
