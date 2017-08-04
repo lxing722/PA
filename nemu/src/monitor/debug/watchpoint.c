@@ -54,6 +54,7 @@ void set_wp(char *args){
 	WP *p = new_wp();
 	printf("good\n");
 	strcpy(p->exprs, args);
+	printf("good\n");
 	bool success = true;
 	p->sum = expr(args,&success);
 	if(success == false)
