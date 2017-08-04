@@ -1,6 +1,6 @@
 #include "monitor/watchpoint.h"
 #include "monitor/expr.h"
-
+#include<string.h>
 #define NR_WP 32
 
 static WP wp_pool[NR_WP];
@@ -25,7 +25,6 @@ WP* new_wp(){
 	WP *temp = free_;
 	free_ = free_->next;
 	temp->next = NULL;
-	printf("good\n");
 	return temp;
 }
 
@@ -52,7 +51,6 @@ void free_wp(int N){
 
 void set_wp(char *args){
 	WP *p = new_wp();
-	printf("good\n");
 	strcpy(p->exprs, args);
 	printf("good\n");
 	bool success = true;
