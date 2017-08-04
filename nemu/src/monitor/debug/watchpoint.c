@@ -85,11 +85,11 @@ int check_wp(){
 			int num = expr(temp->exprs,&success);
 			printf("%d  %d\n",num,temp->sum);
 			if(num == temp->sum){
-				return -1;
+				return temp->NO;
 			}
 		}
 	}
-	return 0;
+	return -1;
 }
 	
 
