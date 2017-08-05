@@ -201,6 +201,7 @@ static bool check_bar(){
 			pop();
 		}
 	}
+	printf("%d\n",stack_len);
 	if(stack_len != 0)
 		return false;
 	return true;
