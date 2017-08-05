@@ -303,14 +303,15 @@ static int eval(int start, int end){
 }
 //////////////////////////////////////////////////////////////
 int expr(char *e, bool *success) {
-	if(!check_bar(e)){
-		*success = false;
-		printf("Bars match error\n");
-		return 0;
-	}
 
 	if(!make_token(e)) {
 		*success = false;
+		return 0;
+	}
+
+	if(!check_bar()){
+		*success = false;
+		printf("Bars match error\n");
 		return 0;
 	}
 
