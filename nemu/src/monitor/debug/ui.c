@@ -61,13 +61,13 @@ static int cmd_si(char *args){
 static void info_all_r(){
 	int i = 0;
 	for(i = R_EAX; i <= R_EDI; i++){
-		printf("%s\t0x%x\t%d\n",regsl[i],reg_l(i),reg_l(i));
+		printf("%s:\t0x%x\t%d\n",regsl[i],reg_l(i),reg_l(i));
 	}
 	for(i = R_AX; i <= R_DI; i++){
-		printf("%s\t0x%x\t%d\n",regsw[i],reg_w(i),reg_w(i));
+		printf("%s:\t0x%x\t%d\n",regsw[i],reg_w(i),reg_w(i));
 	}
 	for(i = R_AL; i <= R_BH; i++){
-		printf("%s\t0x%x\t%d\n",regsb[i],reg_b(i),reg_b(i));
+		printf("%s:\t0x%x\t%d\n",regsb[i],reg_b(i),reg_b(i));
 	}
 }
 /*Return one specific register's value*/
@@ -99,7 +99,7 @@ static int cmd_info(char *args){
 		int temp = info_r(args);
 		if(temp == -1)
 			return 0;
-		printf("%s: 0x%x\t%d\n",args,temp,temp);
+		printf("%s:\t0x%x\t%d\n",args,temp,temp);
 	}
 	if(strcmp(arg, "w") == 0){
 		print_wp();
