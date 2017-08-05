@@ -155,7 +155,7 @@ static bool make_token(char *e) {
 }
 /////////////////////////////////////////////////////////////////////////////my code
 static int stack[MAX_SIZE];
-static unsigned int *stack_len = 0;
+int *stack_len;
 static void init_stack(){
 	*stack_len = 0;
 }
