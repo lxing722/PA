@@ -103,7 +103,7 @@ static bool make_token(char *e) {
 						int j;
 						for(j = 0; j < substr_len; j++)
 							tokens[nr_token].str[j] = substr_start[j];
-						//tokens[nr_token].str[j] = '\0';
+						tokens[nr_token].str[j] = '\0';
 						nr_token++;
 						break;
 					case OR:
