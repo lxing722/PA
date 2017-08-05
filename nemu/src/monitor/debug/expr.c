@@ -258,10 +258,12 @@ static int eval(int start, int end){
 	}
 	else if(start == end){
 		if(tokens[start].str[0] == '$'){
+			printf("%s\n",tokens[start].str);
 			return info_r(tokens[start].str);
 		}
-		else if(strlen(tokens[start].str) > 1 && tokens[start].str[0] == '0' && tokens[start].str[1] == 'x')
+		else if(strlen(tokens[start].str) > 1 && tokens[start].str[0] == '0' && tokens[start].str[1] == 'x'){
 			return my_atoi(tokens[start].str);
+		}
 		return atoi(tokens[start].str);
 	}
 	else if(check_parentheses(start, end)){
