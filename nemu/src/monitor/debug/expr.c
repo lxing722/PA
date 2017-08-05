@@ -201,7 +201,6 @@ static bool check_bar(){
 			pop();
 		}
 	}
-	printf("%d\n",stack_len);
 	if(stack_len != 0)
 		return false;
 	return true;
@@ -259,7 +258,6 @@ static int eval(int start, int end){
 	}
 	else if(start == end){
 		if(tokens[start].str[0] == '$'){
-			//printf("%s\n",tokens[start].str);
 			return info_r(tokens[start].str);
 		}
 		else if(strlen(tokens[start].str) > 1 && tokens[start].str[0] == '0' && tokens[start].str[1] == 'x'){
@@ -303,7 +301,6 @@ static int eval(int start, int end){
 }
 //////////////////////////////////////////////////////////////
 int expr(char *e, bool *success) {
-
 	if(!make_token(e)) {
 		*success = false;
 		return 0;
