@@ -257,8 +257,10 @@ static int eval(int start, int end){
 		assert(0);
 	}
 	else if(start == end){
-		if(tokens[start].str[0] == '$')
+		if(tokens[start].str[0] == '$'){
+			printf("%s\n",tokens[start].str);
 			return info_r(tokens[start].str);
+		}
 		else if(strlen(tokens[start].str) > 1 && tokens[start].str[0] == '0' && tokens[start].str[1] == 'x')
 			return my_atoi(tokens[start].str);
 		return atoi(tokens[start].str);
