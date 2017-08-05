@@ -155,24 +155,23 @@ static bool make_token(char *e) {
 }
 /////////////////////////////////////////////////////////////////////////////my code
 static int stack[MAX_SIZE];
-int *stack_len;
+static unsigned int stack_len = 0;
 static void init_stack(){
-	printf("%d\n",*stack_len);
-	*stack_len = 0;
+	stack_len = 0;
 }
 static void push(int c){
-	if(*stack_len == MAX_SIZE){
+	if(stack_len == MAX_SIZE){
 		printf("Stack is full\n");
 		return;
 	}
-	stack[(*stack_len)++] = c;
+	stack[stack_len++] = c;
 }
-static int pop(){
-	if(*stack_len == 0){
+static void pop(){
+	if(stack_len == 0){
 		printf("Stack is empty\n");
-		return -1;
+		return ;
 	}	
-	return stack[(*stack_len)--];
+	stack_len--;
 }
 static bool check_parentheses(int start, int end){
 	init_stack();
@@ -183,7 +182,7 @@ static bool check_parentheses(int start, int end){
 		if(tokens[i].type == OPENBAR)
 			push(tokens[i].type);
 		if(tokens[i].type == CLOSEBAR){
-			if(*stack_len == 1&&i != end)
+			if(stack_len == 1&&i != end)
 				return false;
 			pop();
 		}
@@ -197,13 +196,13 @@ static bool check_bar(){
 		if(tokens[i].type == OPENBAR)
 			push(tokens[i].type);
 		else if(tokens[i].type == CLOSEBAR){
-			if(*stack_len == 0)
+			if(stack_len == 0)
 				return false;
 			pop();
 		}
 	}
-	printf("%d\n",*stack_len);
-	if(*stack_len != 0)
+	printf("%d\n",stack_len);
+	if(stack_len != 0)
 		return false;
 	return true;
 }
