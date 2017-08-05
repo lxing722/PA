@@ -157,6 +157,7 @@ static bool make_token(char *e) {
 static int stack[MAX_SIZE];
 int *stack_len;
 static void init_stack(){
+	printf("%d\n",*stack_len);
 	*stack_len = 0;
 }
 static void push(int c){
