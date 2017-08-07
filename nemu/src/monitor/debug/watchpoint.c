@@ -51,7 +51,11 @@ void free_wp(int N){
 
 void set_wp(char *args){
 	WP *p = new_wp();
-	strcpy(p->exprs, args);
+	int i;
+	for(i=0; i<strlen(args); i++){
+		p->exprs[i] = args[i];
+	}
+	p->exprs[i] = '\0';
 	bool success = true;
 	p->sum = expr(args,&success);
 	if(success == false)
@@ -86,6 +90,7 @@ int check_wp(){
 			if(num != temp->sum){
 				return temp->NO;
 			}
+			temp = temp->next;
 		}
 	}
 	return -1;
